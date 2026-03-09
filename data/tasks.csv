@@ -1,0 +1,7 @@
+# id;title;description;priority;deadline;status;estimatedMinutes
+33;Task 1 modificat;Am reusit sa il modific;4;2026-01-22;DONE;10
+13;Task important;Verific functionalitatea;5;2026-01-23;IN_PROGRESS;60
+34;merge redo;sa vad;4;2026-02-04;TODO;30
+35;Task 1;demo;3;2026-03-10;TODO;60
+36;Task 2;urgent;5;2026-03-05;IN_PROGRESS;120
+37;Auto task;demo;3;2026-03-09;TODO;60

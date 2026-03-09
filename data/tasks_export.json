@@ -1,0 +1,25 @@
+[ {
+  "id" : 33,
+  "title" : "Task 1 modificat",
+  "description" : "Am reusit sa il modific",
+  "priority" : 4,
+  "deadline" : "2026-01-22",
+  "status" : "DONE",
+  "estimatedMinutes" : 10
+}, {
+  "id" : 13,
+  "title" : "Task important",
+  "description" : "Verific functionalitatea",
+  "priority" : 5,
+  "deadline" : "2026-01-23",
+  "status" : "IN_PROGRESS",
+  "estimatedMinutes" : 60
+}, {
+  "id" : 34,
+  "title" : "merge redo",
+  "description" : "sa vad",
+  "priority" : 4,
+  "deadline" : "2026-02-04",
+  "status" : "TODO",
+  "estimatedMinutes" : 30
+} ]

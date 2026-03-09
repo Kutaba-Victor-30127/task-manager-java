@@ -1,0 +1,8 @@
+2026-02-11T18:39:09.916771600 | CREATE | id=35 title"Audit" description"" priority=5 deadline=2026-02-11 status=IN_PROGRESS est=30
+2026-02-11T18:41:27.593617300 | EDIT | id=35 | BEFORE: id=35 title"Audit" description"" priority=5 deadline=2026-02-11 status=IN_PROGRESS est=30 | AFTER: id=35 title"Audit" description"" priority=5 deadline=2026-02-11 status=IN_PROGRESS est=40
+2026-02-11T18:42:11.007514500 | DELETE | id=35 title"Audit" description"" priority=5 deadline=2026-02-11 status=IN_PROGRESS est=40
+2026-02-11T18:42:22.561161700 | UNDO | type=DELETE | id=35 title"Audit" description"" priority=5 deadline=2026-02-11 status=IN_PROGRESS est=40
+2026-02-11T18:42:30.286370300 | REDO | type=DELETE | id=35 title"Audit" description"" priority=5 deadline=2026-02-11 status=IN_PROGRESS est=40
+2026-03-02T09:27:29.739196200 | CREATE | id=35 title"Task 1" description"demo" priority=3 deadline=2026-03-10 status=TODO est=60
+2026-03-02T09:28:00.249071 | CREATE | id=36 title"Task 2" description"urgent" priority=5 deadline=2026-03-05 status=IN_PROGRESS est=120
+2026-03-02T09:28:57.038895700 | CREATE | id=37 title"Auto task" description"demo" priority=3 deadline=2026-03-09 status=TODO est=60
