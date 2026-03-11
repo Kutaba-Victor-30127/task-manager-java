@@ -5,9 +5,9 @@
 ![Build](https://img.shields.io/badge/build-passing-success)
 ![Tests](https://img.shields.io/badge/tests-JUnit5-blue)
 
-A backend REST API for managing tasks built with *Java and Spring Boot*.
+A backend *REST API for managing tasks* built with *Java and Spring Boot*.
 
-The project demonstrates a *clean layered architecture*, DTO usage, validation, undo/redo functionality, advanced querying and automated tests.
+The project demonstrates a *clean layered architecture*, DTO usage, validation, undo/redo functionality, advanced querying, analytics and automated tests.
 
 ---
 
@@ -27,7 +27,7 @@ http://localhost:8080/swagger-ui/index.html
 
 * Full CRUD operations for tasks
 * Change task status (TODO / IN_PROGRESS / DONE / BLOCKED)
-* Undo / Redo operations
+* Undo / Redo functionality
 * Filtering, sorting and pagination
 * Task statistics and analytics
 * JSON and CSV export
@@ -49,13 +49,13 @@ JUnit 5
 
 # Architecture
 
-The application follows a *layered architecture*:
+The application follows a *layered architecture*.
 
 Controller → Service → Repository
 
 DTO → Mapper → Entity
 
-Flow:
+Application flow:
 
 Client
 ↓
@@ -65,7 +65,7 @@ Service (business logic)
 ↓
 Repository (data access)
 ↓
-Database
+Database (H2)
 
 Project structure:
 
@@ -77,6 +77,12 @@ model → domain models
 storage → repositories and persistence
 mapper → entity ↔ DTO mapping
 config → Spring configuration
+
+---
+
+# Architecture Diagram
+
+Client → Controller → Service → Repository → Database
 
 ---
 
@@ -101,20 +107,28 @@ GET /api/stats/audit/avg-minutes-by-status
 
 ---
 
-# Example Request
+# Example API Request
+
+Create task
 
 POST /api/tasks
 
-
 {
-  "title": "Finish project",
-  "description": "Complete the task manager API",
-  "priority": 3,
-  "deadline": "2026-04-01",
-  "status": "TODO",
-  "estimatedMinutes": 120
+"title": "Finish project",
+"description": "Complete the task manager API",
+"priority": 3,
+"deadline": "2026-04-01",
+"status": "TODO",
+"estimatedMinutes": 120
 }
 
+Example response
+
+{
+"id": 1,
+"title": "Finish project",
+"status": "TODO"
+}
 
 ---
 
@@ -142,6 +156,18 @@ The project contains:
 
 * Unit tests
 * Integration tests
+
+---
+
+# Future Improvements
+
+Possible improvements for the project:
+
+* Authentication with Spring Security + JWT
+* PostgreSQL database instead of H2
+* Docker containerization
+* CI/CD pipeline with GitHub Actions
+* Rate limiting and caching
 
 ---
 
