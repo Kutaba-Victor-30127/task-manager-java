@@ -1,0 +1,6 @@
+target/
+.idea/
+*.log
+*.class
+data/
+*.json

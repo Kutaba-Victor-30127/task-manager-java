@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+<h1>Task Manager</h1>
+
+<!-- LOGIN -->
+<div>
+    <h3>Login</h3>
+    <input id="username" placeholder="Username">
+    <input id="password" type="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+</div>
+
+<hr style="opacity:0.2;">
+
+<!-- CREATE TASK -->
+<div>
+    <h3>Create Task</h3>
+    <input id="task-title" placeholder="Title">
+    <input id="task-deadline" type="datetime-local">
+    <button onclick="createTask()">Create</button>
+</div>
+
+<hr style="opacity:0.2;">
+
+<!-- SEARCH / FILTER / SORT -->
+<div>
+    <h3>Search / Filter</h3>
+
+    <input id="search" placeholder="Search title..." oninput="debounceLoadTasks()">
+
+    <select id="status" onchange="debounceLoadTasks()">
+        <option value="">All</option>
+        <option value="TODO">TODO</option>
+        <option value="IN_PROGRESS">IN_PROGRESS</option>
+        <option value="DONE">DONE</option>
+    </select>
+
+    <select id="sort" onchange="debounceLoadTasks()">
+        <option value="id">ID</option>
+        <option value="deadline">Deadline</option>
+        <option value="priority">Priority</option>
+    </select>
+
+    <select id="direction" onchange="debounceLoadTasks()">
+        <option value="asc">ASC</option>
+        <option value="desc">DESC</option>
+    </select>
+
+    <button onclick="applyFilters()">Apply</button>
+</div>
+
+<hr style="opacity:0.2;">
+
+<!-- TASK LIST -->
+<div>
+    <h3>Tasks</h3>
+
+    <div id="loading" class="loading" style="display:none;">
+    <div class="spinner"></div>
+        Loading tasks...
+    </div>
+   
+    <div id="tasks"></div>
+</div>
+
+
+<!-- PAGINATION -->
+<div>
+    <button onclick="prevPage()">⬅ Prev</button>
+    <span id="page-info"></span>
+    <button onclick="nextPage()">Next ➡</button>
+</div>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
