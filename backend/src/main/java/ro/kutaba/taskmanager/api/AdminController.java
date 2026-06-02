@@ -29,7 +29,7 @@ public class AdminController {
         this.service = service;
     }
 
-    @GetMapping("/admin/all-tasks")
+    @GetMapping("/all-tasks")
     public PageResponse<TaskResponse> getAllTasks(
         @RequestParam(defaultValue = "") String text,
         @RequestParam(required = false) TaskStatus status,
@@ -48,7 +48,7 @@ public class AdminController {
             Sort.by(dir, sort)
         );
 
-        return service.getTasksFiltered(page, size, sort, direction, text, status);
+        return service.getAllTasks(page, size, sort, direction, text, status);
 
     }
 }
