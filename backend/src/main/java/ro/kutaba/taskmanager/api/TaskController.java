@@ -33,7 +33,7 @@ public class TaskController {
 
     // PAGINATION + FILTER + SORT
     @Operation(summary = "Lista task-urilor cu paginare")
-    @GetMapping("/tasks")
+    @GetMapping
     public PageResponse<TaskResponse> getTasks(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size,  

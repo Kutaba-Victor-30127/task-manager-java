@@ -30,7 +30,7 @@ async function login() {
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
-    const response = await fetch("http://localhost:8080/api/auth/login", {
+    const response = await fetch("https://task-manager-java-zrc8.onrender.com/api/auth/login", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({username, password})
@@ -87,10 +87,11 @@ async function loadTasks() {
             size: pageSize,
             text: searchText,
             status: filterStatus,
-            sort: `${sortField},${sortDirection}`
+            sortBy: sortField,
+            direction: sortDirection
         });
 
-        const response = await fetch(`http://localhost:8080/api/tasks?${query.toString()}`, { 
+        const response = await fetch(`https://task-manager-java-zrc8.onrender.com/api/tasks?${query.toString()}`, { 
             headers: {
                 "Authorization": "Bearer " + token
             }
@@ -144,7 +145,7 @@ async function createTask() {
     const deadlineRaw = document.getElementById("task-deadline").value;
     const deadline = deadlineRaw ? deadlineRaw.split("T")[0] : null;
 
-    const response = await fetch("http://localhost:8080/api/tasks", {
+    const response = await fetch("https://task-manager-java-zrc8.onrender.com/api/tasks", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -180,7 +181,7 @@ async function deleteTask(id){
         return;
     }
     
-    const response = await fetch(`http://localhost:8080/api/tasks/${id}`, { 
+    const response = await fetch(`https://task-manager-java-zrc8.onrender.com/api/tasks/${id}`, { 
         method: "DELETE",
         headers: {
             "Authorization": "Bearer " + token
