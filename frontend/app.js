@@ -87,11 +87,15 @@ async function loadTasks() {
             size: pageSize,
             text: searchText,
             status: filterStatus,
-            sortBy: sortField,
+            sort: sortField,
             direction: sortDirection
         });
+        
+        const url = role === "ADMIN"
+            ? `https://task-manager-java-zrc8.onrender.com/api/admin/all-tasks?${query.toString()}`
+            : `https://task-manager-java-zrc8.onrender.com/api/tasks?${query.toString()}`;
 
-        const response = await fetch(`https://task-manager-java-zrc8.onrender.com/api/tasks?${query.toString()}`, { 
+        const response = await fetch(url, { 
             headers: {
                 "Authorization": "Bearer " + token
             }

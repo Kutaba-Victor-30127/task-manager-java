@@ -21,6 +21,7 @@ import javax.print.DocFlavor.STRING;
 
 @RestController
 @RequestMapping("/api/admin")
+@PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
 
     private final TaskService service;
