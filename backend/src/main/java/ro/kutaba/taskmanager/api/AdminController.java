@@ -14,6 +14,7 @@ import ro.kutaba.taskmanager.api.dto.TaskResponse;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import java.util.List;
 
 import javax.print.DocFlavor.STRING;
