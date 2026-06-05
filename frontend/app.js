@@ -37,6 +37,10 @@ async function login() {
     });
 
     if(!response.ok){
+        localStorage.removeItem("token");
+        token = null;
+        role = null;
+        list.innerHTML = "";
         alert("Login failed");
         return;
     }
