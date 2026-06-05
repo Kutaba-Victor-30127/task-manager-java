@@ -1,3 +1,4 @@
+// ================= GLOBAL STATE =================
 let token = localStorage.getItem("token") || null;
 let role = null;
 
@@ -11,11 +12,22 @@ let filterStatus = "";
 let sortField = "id";
 let sortDirection = "asc";
 
-if (token) {
-    const payload = parseJwt(token);
-    role = payload?.role;
+// ================= INIT AUTH (AUTO LOGIN) =================
+initAuth();
+
+function initAuth() {
+    if (token) {
+        const payload = parseJwt(token);
+        role = payload?.role;
+
+        document.getElementById("tasks").style.display = "block";
+        loadTasks();
+    } else {
+        document.getElementById("tasks").style.display = "none";
+    }
 }
 
+// ================= JWT PARSER =================
 function parseJwt(token){
     try {
         return JSON.parse(atob(token.split(".")[1]));
@@ -24,57 +36,84 @@ function parseJwt(token){
     }   
 }
 
-// Login
+// ================= LOGIN =================
 async function login() {
 
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
-    const response = await fetch("https://task-manager-java-zrc8.onrender.com/api/auth/login", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({username, password})
-    });
+    try{
+        const response = await fetch("https://task-manager-java-zrc8.onrender.com/api/auth/login", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({username, password})
+        });
 
-    if(!response.ok){
+        if(!response.ok){
+            localStorage.removeItem("token");
+
+            token = null;
+            role = null;
+
+            const list = document.getElementById("tasks");
+            if (list) list.innerHTML = "";
+
+            alert("Login failed");
+            return;
+        }
+
+        const data = await response.json();
+        
+        token = data.token;
+        localStorage.setItem("token", token);
+
+        const payload = parseJwt(token);
+        role = payload.role;
+
+        alert("Login successful");
+
+        currentPage = 0;
+        loadTasks();
+
+    } catch (err) {
+        console.error("Login error: ", err);
+
+        alert("Server error (CORS / backend down)");
+
         localStorage.removeItem("token");
         token = null;
         role = null;
-        list.innerHTML = "";
-        alert("Login failed");
-        return;
     }
-
-    const data = await response.json();
-    
-    token = data.token;
-    localStorage.setItem("token",token);
-
-    //extragem rolul din token
-    const payload = parseJwt(token);
-    role = payload.role;
-
-    alert("Login successful");
-
-    currentPage = 0;
-    loadTasks();
 }
 
-// LOAD TASKS(PAGINATION)
+// ================= LOGOUT =================
+function logout() {
+    localStorage.removeItem("token");
+
+    token = null;
+    role = null;
+
+    const list = document.getElementById("tasks");
+    if (list) list.innerHTML = "";
+
+    alert("Logged out");
+}
+
+// ================= LOAD TASKS =================
 async function loadTasks() {
     
     setLoading(true);
 
     try {
 
-        if (!token) {
-            alert("Please login first");
-            return;
-        }
-
         const list = document.getElementById("tasks");
         if (!list){
             console.error("tasks element not found");
+            return;
+        }
+
+        if (!token) {
+            list.innerHTML = "<p>Please login to see tasks</p>";
             return;
         }
 
@@ -141,7 +180,7 @@ async function loadTasks() {
     }
 }
 
-// Create task
+// ================= CREATE =================
 async function createTask() {
     
     if (!token) {
@@ -177,11 +216,11 @@ async function createTask() {
     document.getElementById("task-title").value = "";
     document.getElementById("task-deadline").value = "";
 
-    currentPage = 0; //reset la prima pagina
+    currentPage = 0;
     loadTasks();
 }
 
-// Delete task
+// ================= DELETE =================
 async function deleteTask(id){
     
     if (!token) {
@@ -204,7 +243,7 @@ async function deleteTask(id){
     loadTasks();
 }
 
-// PAGINATION UI
+// ================= PAGINATION =================
 function nextPage(){
     if (currentPage < totalPages - 1){
         currentPage++;
@@ -226,13 +265,14 @@ function updatePaginationUI(){
     }   
 }
 
+// ================= FILTER =================
 function applyFilters(){
     searchText = document.getElementById("search").value;
     filterStatus = document.getElementById("status").value;
     sortField = document.getElementById("sort").value;
     sortDirection = document.getElementById("direction").value;
     
-    currentPage = 0;// reset pagination
+    currentPage = 0;
     loadTasks();
 }
 
@@ -240,21 +280,16 @@ function debounceLoadTasks(){
     clearTimeout(debounceTimeout);
  
     debounceTimeout = setTimeout(() => {
-        currentPage = 0; // reset pagination
+        currentPage = 0;
         loadTasks();
-    }, 400);// 400ms delay
+    }, 400);
 }
 
+// ================= LOADING =================
 function setLoading(isLoading) {
-    const btn = document.getElementById("load-btn");
     const loading = document.getElementById("loading");
 
-    if (btn) btn.disabled = isLoading;
-    if (loading) loading.style.display = isLoading ? "block" : "none";
-}
-
-window.onload = () => {
-    if (token) {
-        loadTasks();
+    if (loading) {
+        loading.style.display = isLoading ? "block" : "none";
     }
-};
+}
