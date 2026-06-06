@@ -103,10 +103,7 @@ function logout() {
 async function loadTasks() {
 
     const list = document.getElementById("tasks");
-    if (!list){
-        console.error("tasks element not found");
-        return;
-    }
+    if (!list) return;
 
     if (!token) {
         list.innerHTML = "<p>Please login to see tasks</p>";
@@ -119,6 +116,7 @@ async function loadTasks() {
 
         list.innerHTML = "";
 
+        // skeleton
         for (let i = 0; i < 5; i++) {
             const sk = document.createElement("div");
             sk.className = "skeleton";
@@ -151,9 +149,17 @@ async function loadTasks() {
 
         const data = await response.json();
         const tasks = data.content;
+
+        console.log("TASKS:", tasks); 
+
         totalPages = data.totalPages;
 
-        list.innerHTML = ""; 
+        list.innerHTML = "";
+
+        if (!tasks || tasks.length === 0) {
+            list.innerHTML = "<p>No tasks found</p>";
+            return;
+        }
 
         tasks.forEach(t => {
             const div = document.createElement("div");
@@ -161,10 +167,10 @@ async function loadTasks() {
 
             div.innerHTML = `
                 <span>
-                <b>${t.title}</b><br> 
-                <small>${t.status}</small>
+                    <b>${t.title}</b><br> 
+                    <small>${t.status}</small>
                 </span>
-                ${role === "ADMIN" ? `<button onclick="deleteTask(${t.id})">Delete</button>` : ""}  
+                ${role === "ADMIN" ? `<button onclick="deleteTask(${t.id})">Delete</button>` : ""}
             `;
 
             list.appendChild(div);
@@ -176,7 +182,7 @@ async function loadTasks() {
         console.error(e);
         list.innerHTML = "Error loading tasks";
     } finally {
-        setLoading(false); 
+        setLoading(false);
     }
 }
 
