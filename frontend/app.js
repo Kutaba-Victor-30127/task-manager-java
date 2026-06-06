@@ -101,21 +101,21 @@ function logout() {
 
 // ================= LOAD TASKS =================
 async function loadTasks() {
-    
+
+    const list = document.getElementById("tasks");
+    if (!list){
+        console.error("tasks element not found");
+        return;
+    }
+
+    if (!token) {
+        list.innerHTML = "<p>Please login to see tasks</p>";
+        return;
+    }
+
     setLoading(true);
 
     try {
-
-        const list = document.getElementById("tasks");
-        if (!list){
-            console.error("tasks element not found");
-            return;
-        }
-
-        if (!token) {
-            list.innerHTML = "<p>Please login to see tasks</p>";
-            return;
-        }
 
         list.innerHTML = "";
 
@@ -133,7 +133,7 @@ async function loadTasks() {
             sort: sortField,
             direction: sortDirection
         });
-        
+
         const url = role === "ADMIN"
             ? `https://task-manager-java-zrc8.onrender.com/api/admin/all-tasks?${query.toString()}`
             : `https://task-manager-java-zrc8.onrender.com/api/tasks?${query.toString()}`;
@@ -174,7 +174,7 @@ async function loadTasks() {
 
     } catch (e) {
         console.error(e);
-        document.getElementById("tasks").innerHTML = "Error loading tasks";
+        list.innerHTML = "Error loading tasks";
     } finally {
         setLoading(false); 
     }
