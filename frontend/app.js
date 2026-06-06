@@ -184,7 +184,8 @@ async function loadTasks() {
 async function createTask() {
     
     if (!token) {
-        alert("Login first");
+        const list = document.getElementById("tasks");
+        if (list) list.innerHTML = "<p>Please login to see tasks</p>";
         return;
     }
 
@@ -209,7 +210,8 @@ async function createTask() {
     });
 
     if (!response.ok){
-        alert("Failed to create task");
+        const list = document.getElementById("tasks");
+        if (list) list.innerHTML = "<p>Failed to create task</p>";
         return;
     }
 
@@ -224,7 +226,8 @@ async function createTask() {
 async function deleteTask(id){
     
     if (!token) {
-        alert("Login first");
+        const list = document.getElementById("tasks");
+        if (list) list.innerHTML = "<p>Please login to perform this action</p>";
         return;
     }
     
@@ -236,7 +239,8 @@ async function deleteTask(id){
     });
 
     if(!response.ok){
-        alert("Failed to delete task");
+        const list = document.getElementById("tasks");
+        if (list) list.innerHTML = "<p>Failed to delete task</p>";
         return;
     }
 
