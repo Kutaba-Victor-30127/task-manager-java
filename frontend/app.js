@@ -73,7 +73,7 @@ async function login() {
         showMessage("Login successful", "success");
 
         currentPage = 0;
-        loadTasks();
+        await loadTasks();
 
     } catch (err) {
         console.error("Login error: ", err);
@@ -228,7 +228,7 @@ async function createTask() {
     document.getElementById("task-deadline").value = "";
 
     currentPage = 0;
-    loadTasks();
+    await loadTasks();
 }
 
 // ================= DELETE =================
