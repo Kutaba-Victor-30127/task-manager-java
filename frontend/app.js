@@ -114,9 +114,9 @@ async function loadTasks() {
 
     try {
 
+        // reset + skeleton
         list.innerHTML = "";
 
-        // skeleton
         for (let i = 0; i < 5; i++) {
             const sk = document.createElement("div");
             sk.className = "skeleton";
@@ -136,24 +136,23 @@ async function loadTasks() {
             ? `https://task-manager-java-zrc8.onrender.com/api/admin/all-tasks?${query.toString()}`
             : `https://task-manager-java-zrc8.onrender.com/api/tasks?${query.toString()}`;
 
-        const response = await fetch(url, { 
+        const response = await fetch(url, {
             headers: {
                 "Authorization": "Bearer " + token
             }
         });
 
-        if(!response.ok){
-            list.innerHTML = "Error loading tasks";
+        if (!response.ok) {
+            list.innerHTML = "<p>Error loading tasks</p>";
             return;
         }
 
         const data = await response.json();
         const tasks = data.content;
 
-        console.log("TASKS:", tasks); 
-
         totalPages = data.totalPages;
 
+        // curățăm skeleton
         list.innerHTML = "";
 
         if (!tasks || tasks.length === 0) {
@@ -167,7 +166,7 @@ async function loadTasks() {
 
             div.innerHTML = `
                 <span>
-                    <b>${t.title}</b><br> 
+                    <b>${t.title}</b><br>
                     <small>${t.status}</small>
                 </span>
                 ${role === "ADMIN" ? `<button onclick="deleteTask(${t.id})">Delete</button>` : ""}
@@ -180,9 +179,9 @@ async function loadTasks() {
 
     } catch (e) {
         console.error(e);
-        list.innerHTML = "Error loading tasks";
+        list.innerHTML = "<p>Error loading tasks</p>";
     } finally {
-        setLoading(false);
+        setLoading(false); 
     }
 }
 
