@@ -70,6 +70,7 @@ async function login() {
         const payload = parseJwt(token);
         role = payload?.role?.replace("ROLE_", "");
 
+        document.getElementById("tasks").style.display = "block";
         currentPage = 0;
         await loadTasks();
 
