@@ -68,12 +68,12 @@ async function login() {
         localStorage.setItem("token", token);
 
         const payload = parseJwt(token);
-        role = payload.role;
-
-        showMessage("Login successful", "success");
+        role = payload?.role?.replace("ROLE_", "");
 
         currentPage = 0;
         await loadTasks();
+
+        showMessage("Login successful", "success");
 
     } catch (err) {
         console.error("Login error: ", err);
