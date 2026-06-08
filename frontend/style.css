@@ -50,11 +50,17 @@ button:hover {
 .task {
     background: #1e293b;
     padding: 15px;
-    margin-top: 10px;
-    border-radius: 10px;
+    margin-top: 12px;
+    border-radius: 12px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: 0.2s;
+}
+
+.task:hover {
+    transform: scale(1.02);
+    background: #243247;
 }
 
 /* DELETE BUTTON */
@@ -69,6 +75,14 @@ button:hover {
 /* PAGINATION */
 #page-info {
     margin: 0 10px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
 }
 
 /* LOADING */
@@ -110,4 +124,81 @@ button:hover {
 @keyframes shimmer {
     0% { background-position: -200% 0; }
     100% { background-position: 200% 0; }
+}
+
+/* LEFT SIDE */
+.task-left {
+    display: flex;
+    flex-direction: column;
+}
+
+/* TITLE */
+.task-title {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* META ROW */
+.task-meta {
+    margin-top: 5px;
+    font-size: 12px;
+    color: #aaa;
+    display: flex;
+    gap: 10px;
+}
+
+/* BADGE */
+.badge {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+/* STATUS COLORS */
+.badge.TODO {
+    background: #facc15;
+    color: black;
+}
+
+.badge.IN_PROGRESS {
+    background: #3b82f6;
+}
+
+.badge.DONE {
+    background: #22c55e;
+}
+
+/* DEADLINE */
+.deadline {
+    opacity: 0.7;
+}
+
+/* ACTIONS */
+.task-actions button {
+    background: #ef4444;
+}
+
+.task-actions button:hover {
+    background: #dc2626;
+}
+
+/* TOAST MESSAGE */
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    z-index: 999;
+}
+
+.toast.success {
+    background: #22c55e;
+}
+
+.toast.error {
+    background: #ef4444;
 }

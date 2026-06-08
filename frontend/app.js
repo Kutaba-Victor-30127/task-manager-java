@@ -58,7 +58,7 @@ async function login() {
             const list = document.getElementById("tasks");
             if (list) list.innerHTML = "";
 
-            alert("Login failed");
+            showMessage("Login failed", "error");
             return;
         }
 
@@ -70,7 +70,7 @@ async function login() {
         const payload = parseJwt(token);
         role = payload.role;
 
-        alert("Login successful");
+        showMessage("Login successful", "success");
 
         currentPage = 0;
         loadTasks();
@@ -78,7 +78,7 @@ async function login() {
     } catch (err) {
         console.error("Login error: ", err);
 
-        alert("Server error (CORS / backend down)");
+        showMessage("Server error (CORS / backend down)", "error");
 
         localStorage.removeItem("token");
         token = null;
@@ -96,7 +96,7 @@ function logout() {
     const list = document.getElementById("tasks");
     if (list) list.innerHTML = "";
 
-    alert("Logged out");
+    showMessage("Logged out", "success");
 }
 
 // ================= LOAD TASKS =================
@@ -114,7 +114,6 @@ async function loadTasks() {
 
     try {
 
-        // reset + skeleton
         list.innerHTML = "";
 
         for (let i = 0; i < 5; i++) {
@@ -152,7 +151,6 @@ async function loadTasks() {
 
         totalPages = data.totalPages;
 
-        // curățăm skeleton
         list.innerHTML = "";
 
         if (!tasks || tasks.length === 0) {
@@ -165,11 +163,17 @@ async function loadTasks() {
             div.className = "task";
 
             div.innerHTML = `
-                <span>
-                    <b>${t.title}</b><br>
-                    <small>${t.status}</small>
-                </span>
-                ${role === "ADMIN" ? `<button onclick="deleteTask(${t.id})">Delete</button>` : ""}
+                <div class="task-left">
+                    <div class="task-title">${t.title}</div>
+                    <div class="task-meta">
+                        <span class="badge ${t.status}">${t.status}</span>
+                        <span class="deadline">${t.deadline || "No deadline"}</span>
+                    </div>
+                </div>
+
+                <div class="task-actions">
+                    ${role === "ADMIN" ? `<button onclick="deleteTask(${t.id})">Delete</button>` : ""}
+                </div>
             `;
 
             list.appendChild(div);
@@ -283,6 +287,18 @@ function applyFilters(){
     
     currentPage = 0;
     loadTasks();
+}
+
+function showMessage(text, type){
+    const msg = document.createElement("div");
+    msg.className = `toast ${type}`;
+    msg.innerText = text;
+
+    document.body.appendChild(msg);
+
+    setTimeout(() => {
+        msg.remove();
+    }, 3000);
 }
 
 function debounceLoadTasks(){
