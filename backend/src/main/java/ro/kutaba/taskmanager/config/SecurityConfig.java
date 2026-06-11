@@ -14,7 +14,7 @@ import ro.kutaba.taskmanager.config.JwtFilter;
 public class SecurityConfig{
     private final JwtFilter jwtFilter;
 
-    public SecurityConfig(JwtFilter jwtFilter){
+    public SecurityConfig(JwtFilter jwtFilter){ 
         this.jwtFilter = jwtFilter;
     }
     @Bean
