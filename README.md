@@ -18,7 +18,7 @@ https://gorgeous-churros-7fff2c.netlify.app/
 
 ### API Documentation (Swagger)
 
-https://task-manager-java-zrc8.onrender.com/swagger
+https://task-manager-java-zrc8.onrender.com/swagger-ui/index.html
 
 ### GitHub Repository
 
