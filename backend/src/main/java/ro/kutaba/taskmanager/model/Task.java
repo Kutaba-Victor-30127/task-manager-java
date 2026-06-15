@@ -7,7 +7,7 @@ public class Task {
     private Integer id;
     private String title;
     private String description;
-    private int priority; // 1-5
+    private int priority;
     private LocalDate deadline;
     private TaskStatus status;
     private int estimatedMinutes;
@@ -35,7 +35,7 @@ public class Task {
 
     public void setId(Integer id) {
         if (id != null && id < 0) {
-            throw new IllegalArgumentException("id invalid");
+            throw new IllegalArgumentException("Task id must not be negative");
         }
         this.id = id;
     }
@@ -65,43 +65,43 @@ public class Task {
     }
 
     public void setTitle(String title) {
-        if (title == null) throw new IllegalArgumentException("Titlul nu poate fi null");
+        if (title == null) throw new IllegalArgumentException("Title must not be null");
         String v = title.trim();
-        if (v.isEmpty()) throw new IllegalArgumentException("Titlul nu poate fi gol");
-        if (v.length() < 3) throw new IllegalArgumentException("Titlu trebuie sa aiba minim 3 caractere");
-        if (v.length() > 100) throw new IllegalArgumentException("Titlul trebuie sa aiba maxim 100 de caractere");
- 
+        if (v.isEmpty()) throw new IllegalArgumentException("Title must not be blank");
+        if (v.length() < 3) throw new IllegalArgumentException("Title must contain at least 3 characters");
+        if (v.length() > 100) throw new IllegalArgumentException("Title must contain at most 100 characters");
+
         this.title = v;
     }
 
     public void setDescription(String description) {
         String v = (description == null) ? "" : description.trim();
-        if (v.length() > 500) throw new IllegalArgumentException("Descrierea trebuie sa aiba maxim 500 de caractere");
-        this.description = v; 
+        if (v.length() > 500) throw new IllegalArgumentException("Description must contain at most 500 characters");
+        this.description = v;
     }
 
     public void setPriority(int priority) {
         if (priority < 1 || priority > 5) {
-            throw new IllegalArgumentException("priority trebuie sa fie intre 1 si 5");
+            throw new IllegalArgumentException("Priority must be between 1 and 5");
         }
         this.priority = priority;
     }
 
     public void setDeadline(LocalDate deadline) {
         if (deadline == null) {
-            throw new IllegalArgumentException("deadline nu poate fi null");
+            throw new IllegalArgumentException("Deadline must not be null");
         }
         this.deadline = deadline;
     }
 
     public void setStatus(TaskStatus status) {
-        if (status == null) throw new IllegalArgumentException("Status nu poate fi null");
+        if (status == null) throw new IllegalArgumentException("Status must not be null");
         this.status = status;
     }
 
     public void setEstimatedMinutes(int estimatedMinutes) {
-        if (estimatedMinutes < 1) throw new IllegalArgumentException("Timpul estimat trebuie sa fie >= 1 minut");
-        if (estimatedMinutes > 10_000) throw new IllegalArgumentException("Timp estimat nerealist (max 10000)");
+        if (estimatedMinutes < 1) throw new IllegalArgumentException("Estimated time must be at least 1 minute");
+        if (estimatedMinutes > 10_000) throw new IllegalArgumentException("Estimated time is too large");
         this.estimatedMinutes = estimatedMinutes;
     }
 

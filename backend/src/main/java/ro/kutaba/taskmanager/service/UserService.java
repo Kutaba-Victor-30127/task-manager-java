@@ -3,9 +3,8 @@ package ro.kutaba.taskmanager.service;
 import org.springframework.stereotype.Service;
 import ro.kutaba.taskmanager.model.User;
 import ro.kutaba.taskmanager.repository.UserRepository;
-import ro.kutaba.taskmanager.config.SecurityConfig;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import ro.kutaba.taskmanager.api.error.InvalidCredentialsException;
 import ro.kutaba.taskmanager.api.error.UsernameAlreadyExistsException;
 import ro.kutaba.taskmanager.model.Role;
 
@@ -25,19 +24,18 @@ public class UserService{
         }
 
         user.setRole(Role.USER);
-        // hash parola 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
     public User login(String username, String password){
         User user = userRepository.findByUsername(username)
-                    .orElseThrow(() -> new RuntimeException("User not found"));
+                    .orElseThrow(InvalidCredentialsException::new);
 
         if (!passwordEncoder.matches(password, user.getPassword())){
-            throw new RuntimeException("Invalid Password");
+            throw new InvalidCredentialsException();
         }
-        
+
         return user;
     }
 }

@@ -28,7 +28,6 @@ public class FileAuditLogger implements AuditLogger{
                 StandardOpenOption.APPEND
             );
         }catch (IOException e){
-            //nu omoram aplicatia pentru logg
             System.err.println("Audit log failed: " + e.getMessage());
         }
     }

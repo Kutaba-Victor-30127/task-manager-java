@@ -1,28 +1,23 @@
 package ro.kutaba.taskmanager.api;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ro.kutaba.taskmanager.model.Task;
-import ro.kutaba.taskmanager.model.TaskStatus;
-import ro.kutaba.taskmanager.service.TaskService;
-import org.springframework.data.domain.Page;
 import ro.kutaba.taskmanager.api.dto.PageResponse;
 import ro.kutaba.taskmanager.api.dto.TaskResponse;
-
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.security.access.prepost.PreAuthorize;
-import java.util.List;
-
-import javax.print.DocFlavor.STRING;
-
+import ro.kutaba.taskmanager.model.TaskStatus;
+import ro.kutaba.taskmanager.service.TaskService;
 
 @RestController
 @RequestMapping("/api/admin")
 @PreAuthorize("hasRole('ADMIN')")
+@SecurityRequirement(name = "bearerAuth")
+@Tag(name = "Admin", description = "Administrative task management endpoints")
 public class AdminController {
 
     private final TaskService service;
@@ -31,26 +26,27 @@ public class AdminController {
         this.service = service;
     }
 
+    @Operation(summary = "List tasks across all users")
     @GetMapping("/all-tasks")
     public PageResponse<TaskResponse> getAllTasks(
         @RequestParam(defaultValue = "") String text,
         @RequestParam(required = false) TaskStatus status,
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "5") int size,
-        @RequestParam(defaultValue = "id") String sort,
+        @RequestParam(required = false) String sortBy,
+        @RequestParam(required = false) String sort,
         @RequestParam(defaultValue = "asc") String direction
-    ){
-        Sort.Direction dir = direction.equalsIgnoreCase("desc")
-         ? Sort.Direction.DESC 
-         : Sort.Direction.ASC;
-         
-        Pageable pageable = PageRequest.of(
-            page, 
-            size,   
-            Sort.by(dir, sort)
-        );
+    ) {
+        return service.getAllTasks(page, size, resolveSortField(sortBy, sort), direction, text, status);
+    }
 
-        return service.getAllTasks(page, size, sort, direction, text, status);
-
+    private String resolveSortField(String sortBy, String sort) {
+        if (sortBy != null && !sortBy.isBlank()) {
+            return sortBy;
+        }
+        if (sort != null && !sort.isBlank()) {
+            return sort;
+        }
+        return "id";
     }
 }

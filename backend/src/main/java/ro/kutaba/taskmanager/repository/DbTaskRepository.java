@@ -44,11 +44,9 @@ public class DbTaskRepository implements TaskRepository{
         TaskEntity e;
 
         if (t.getId() != null) {
-            //update
             e = jpa.findById(t.getId().longValue())
                     .orElseThrow(() -> new RuntimeException("Task not found"));
         } else {
-            //create
             e = new TaskEntity();
         }
 
@@ -140,7 +138,6 @@ public class DbTaskRepository implements TaskRepository{
                 .map(DbTaskRepository::toModel);
     }
 
-    // Entity -> Model
     public static Task toModel(TaskEntity e){
         return new Task(
             e.getId() == null ? null : e.getId().intValue(),
@@ -153,17 +150,4 @@ public class DbTaskRepository implements TaskRepository{
         );  
     }
 
-    // Model -> Entity
-    public static TaskEntity toEntity(Task t){
-        TaskEntity e = new TaskEntity();
-
-        e.setTitle(t.getTitle());
-        e.setDescription(t.getDescription());
-        e.setPriority(t.getPriority());
-        e.setDeadline(t.getDeadline());
-        e.setStatus(t.getStatus());
-        e.setEstimatedMinutes(t.getEstimatedMinutes());
-
-        return e;
-    } 
 }
