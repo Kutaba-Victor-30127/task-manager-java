@@ -16,13 +16,9 @@ The goal of the project was not only to implement CRUD functionality, but also t
 
 https://gorgeous-churros-7fff2c.netlify.app/
 
-### Backend API
+### API Documentation (Swagger)
 
-https://task-manager-java-zrc8.onrender.com
-
-### Swagger Documentation
-
-https://task-manager-java-zrc8.onrender.com/swagger-ui/index.html
+https://task-manager-java-zrc8.onrender.com/swagger
 
 ### GitHub Repository
 
@@ -86,7 +82,7 @@ https://github.com/Kutaba-Victor-30127/task-manager-java
 * End-to-End Tests
 * MockMvc Tests
 
-43 automated tests currently passing.
+**43 automated tests passing**
 
 ---
 
@@ -108,41 +104,7 @@ Frontend (HTML/CSS/JavaScript)
        PostgreSQL
 ```
 
-The project follows a layered architecture that separates responsibilities between:
-
-### Controller Layer
-
-Responsible for:
-
-* HTTP request handling
-* request validation
-* response mapping
-* API endpoint exposure
-
-### Service Layer
-
-Responsible for:
-
-* business logic
-* authorization checks
-* validation rules
-* application workflows
-
-### Repository Layer
-
-Responsible for:
-
-* database communication
-* persistence operations
-* query execution
-
-### Database Layer
-
-Responsible for:
-
-* permanent storage
-* data consistency
-* relational data management
+The project follows a layered architecture that separates responsibilities between presentation, business logic, persistence, and storage layers.
 
 ---
 
@@ -152,22 +114,22 @@ Authentication is implemented using JSON Web Tokens (JWT).
 
 Workflow:
 
-1. User registers an account.
-2. Password is hashed using BCrypt.
-3. User logs in.
-4. Backend generates a JWT token.
-5. Client sends the token in the Authorization header.
-6. JWT filter validates every request.
-7. Spring Security authorizes access based on user roles.
+1. User registers an account
+2. Password is hashed using BCrypt
+3. User logs in
+4. Backend generates a JWT token
+5. Client sends the token in the Authorization header
+6. JWT filter validates incoming requests
+7. Spring Security authorizes access based on roles
 
 Implemented security features:
 
 * BCrypt password hashing
 * JWT authentication
 * Stateless sessions
-* User/Admin roles
-* Access denied handling
-* Authentication entry point customization
+* USER and ADMIN roles
+* Custom access denied handling
+* Custom authentication entry point
 * Environment variable secrets
 
 Example:
@@ -228,23 +190,17 @@ Task (Many)
 
 ## Filtering
 
-Filter tasks by status:
-
 ```http
 GET /api/tasks?status=TODO
 ```
 
 ## Search
 
-Search tasks by title:
-
 ```http
 GET /api/tasks?title=meeting
 ```
 
 ## Sorting
-
-Examples:
 
 ```http
 GET /api/tasks?sort=deadline
@@ -260,7 +216,7 @@ GET /api/tasks?sort=priority
 GET /api/tasks?page=0&size=5
 ```
 
-Returns:
+Example response:
 
 ```json
 {
@@ -280,30 +236,27 @@ The project contains automated tests covering multiple layers of the application
 
 ### Unit Tests
 
-Test isolated business logic.
-
-Examples:
-
 * TaskService
 * UserService
 
 ### Integration Tests
 
-Verify collaboration between Spring components and database interactions.
+* Service integration testing
+* Database integration testing
 
 ### Repository Tests
 
-Validate JPA persistence behavior.
+* JPA persistence verification
 
 ### Controller Tests
 
-Use MockMvc to verify API endpoints.
+* MockMvc endpoint testing
 
 ### End-to-End Tests
 
-Verify complete request flows.
+* Complete API workflow validation
 
-Current status:
+Current test status:
 
 ```text
 Tests Run: 43
@@ -315,39 +268,57 @@ Errors: 0
 
 # Deployment
 
-The application is deployed using cloud services.
-
-Frontend:
+## Frontend
 
 * Netlify
 
-Backend:
+## Backend
 
 * Render
 
-Database:
+## Database
 
 * PostgreSQL
 
-Environment configuration:
+Sensitive configuration is stored using environment variables:
 
 * JWT secrets
 * database credentials
 * deployment configuration
 
-are stored using environment variables.
+---
+
+# Project Structure
+
+```text
+task-manager-java
+│
+├── backend
+│   ├── controllers
+│   ├── services
+│   ├── repositories
+│   ├── security
+│   ├── dto
+│   └── tests
+│
+├── frontend
+│
+├── console-app
+│
+└── README.md
+```
 
 ---
 
 # Project Evolution
 
-Version 1
+### Version 1
 
 * Console Application
 * File Persistence
 * Core Business Logic
 
-Version 2
+### Version 2
 
 * Spring Boot REST API
 * PostgreSQL
@@ -355,7 +326,7 @@ Version 2
 * Spring Security
 * Swagger
 
-Version 3
+### Version 3
 
 * Frontend Integration
 * Cloud Deployment
